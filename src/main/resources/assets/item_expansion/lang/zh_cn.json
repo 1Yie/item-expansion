@@ -1,0 +1,10 @@
+{
+  "item.item_expansion.teleportation_staff": "传送法杖",
+
+  "item.item_expansion.teleportation_staff.tooltip_1": "右键记录坐标，对准生物右键传送到该坐标",
+  "item.item_expansion.teleportation_staff.key": "已写入记录点",
+  "item.item_expansion.teleportation_staff.nbt.key": "无记录点",
+  "item.item_expansion.teleportation_staff.key.fail": "记录点维度不一致",
+
+  "itemGroup.item_expansion.tool_group": "物品扩展 - 工具"
+}
