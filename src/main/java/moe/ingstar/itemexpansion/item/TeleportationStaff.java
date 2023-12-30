@@ -7,6 +7,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 
@@ -33,7 +34,6 @@ public class TeleportationStaff extends Item {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack mainHandItem = user.getMainHandStack();
         ItemStack offHanItem = user.getOffHandStack();
-
         if (!NBTHelper.hasNbt(mainHandItem, "used")) {
             counter.putString("world", user.getWorld().getRegistryKey().getValue().toString());
             counter.putString("x", String.format("%.2f", user.getX()));

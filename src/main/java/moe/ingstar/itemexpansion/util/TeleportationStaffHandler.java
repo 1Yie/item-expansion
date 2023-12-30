@@ -6,8 +6,11 @@ import moe.ingstar.itemexpansion.registry.ModItems;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.minecraft.entity.LivingEntity;
 
+import net.minecraft.entity.boss.WitherEntity;
+import net.minecraft.entity.boss.dragon.EnderDragonEntity;
 import net.minecraft.entity.damage.DamageType;
 import net.minecraft.entity.damage.DamageTypes;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.packet.s2c.play.PositionFlag;
 import net.minecraft.registry.Registries;
@@ -29,7 +32,8 @@ public class TeleportationStaffHandler {
     public static NbtCompound nbtCompound = TeleportationStaff.counter;
     public static void init() {
         UseEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
-            if (entity instanceof LivingEntity && player.getMainHandStack().isOf(ModItems.TELEPORTATION_STAFF)) {
+            if (entity instanceof LivingEntity && player.getMainHandStack().isOf(ModItems.TELEPORTATION_STAFF)
+                    && !(entity instanceof PlayerEntity) && !(entity instanceof EnderDragonEntity) && !(entity instanceof WitherEntity)) {
                 if (player.getMainHandStack().getItem() == ModItems.TELEPORTATION_STAFF) {
                     String dimensionNbtId = nbtCompound.getString("world");
                     RegistryKey<World> dimension = player.getEntityWorld().getRegistryKey();
