@@ -10,7 +10,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 public class ModItems {
-    public static final Item TELEPORTATION_STAFF = new TeleportationStaff(new FabricItemSettings().maxCount(1));
+    public static final Item TELEPORTATION_STAFF = new TeleportationStaff(new FabricItemSettings().maxCount(1).maxDamage(64));
 
 
     public static void register() {

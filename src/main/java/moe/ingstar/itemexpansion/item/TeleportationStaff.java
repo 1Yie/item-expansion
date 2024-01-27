@@ -1,13 +1,12 @@
 package moe.ingstar.itemexpansion.item;
 
 import moe.ingstar.itemexpansion.util.NBTHelper;
-import moe.ingstar.itemexpansion.util.TeleportationStaffHandler;
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.entity.LivingEntity;
+
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 
@@ -22,10 +21,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class TeleportationStaff extends Item {
-    public static NbtCompound counter = new NbtCompound();
-
-    public static NbtCompound worldCounter = TeleportationStaffHandler.nbtCompound;
-
+    private static final NbtCompound nbtCompound = new NbtCompound();
     public TeleportationStaff(Settings settings) {
         super(settings);
     }
@@ -34,22 +30,25 @@ public class TeleportationStaff extends Item {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack mainHandItem = user.getMainHandStack();
         ItemStack offHanItem = user.getOffHandStack();
-        if (!NBTHelper.hasNbt(mainHandItem, "used")) {
-            counter.putString("world", user.getWorld().getRegistryKey().getValue().toString());
-            counter.putString("x", String.format("%.2f", user.getX()));
-            counter.putString("y", String.format("%.2f", user.getY()));
-            counter.putString("z", String.format("%.2f", user.getZ()));
-            counter.putString("used", "1");
 
-            user.getMainHandStack().setNbt(counter);
+        if (!NBTHelper.hasNbt(mainHandItem, "used")) {
+            nbtCompound.putString("world", user.getWorld().getRegistryKey().getValue().toString());
+            nbtCompound.putString("x", String.format("%.2f", user.getX()));
+            nbtCompound.putString("y", String.format("%.2f", user.getY()));
+            nbtCompound.putString("z", String.format("%.2f", user.getZ()));
+            nbtCompound.putString("used", "1");
+
+            user.getMainHandStack().setNbt(nbtCompound);
         } else {
-            NbtCompound nbt = user.getMainHandStack().getNbt();
-            counter.putString("world", user.getWorld().getRegistryKey().getValue().toString());
-            nbt.putString("x", String.format("%.2f", user.getX()));
-            nbt.putString("y", String.format("%.2f", user.getY()));
-            nbt.putString("z", String.format("%.2f", user.getZ()));
-            user.getMainHandStack().setNbt(nbt);
+            nbtCompound.putString("world", user.getWorld().getRegistryKey().getValue().toString());
+            nbtCompound.putString("x", String.format("%.2f", user.getX()));
+            nbtCompound.putString("y", String.format("%.2f", user.getY()));
+            nbtCompound.putString("z", String.format("%.2f", user.getZ()));
+
+            user.getMainHandStack().setNbt(nbtCompound);
         }
+
+        user.getItemCooldownManager().set(user.getMainHandStack().getItem(), 10);
 
         if (hand == Hand.MAIN_HAND) {
             user.sendMessage(Text.translatable("item.item_expansion.teleportation_staff.key").formatted(Formatting.WHITE), true);
@@ -68,11 +67,10 @@ public class TeleportationStaff extends Item {
         NbtCompound tag = stack.getNbt();
 
         if (tag != null && tag.contains("x") && tag.contains("y") && tag.contains("z")) {
-
             NbtElement x = tag.get("x");
             NbtElement y = tag.get("y");
             NbtElement z = tag.get("z");
-            NbtElement w = worldCounter.get("world");
+            NbtElement w = stack.getNbt().get("world");
 
             Text worldText = Text.translatable("World: " + w).formatted(Formatting.GRAY);
             Text coordsText = Text.translatable("X: " + x + ", Y: " + y + ", Z: " + z).formatted(Formatting.GRAY);
