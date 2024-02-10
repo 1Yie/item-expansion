@@ -12,7 +12,7 @@ import net.minecraft.util.Identifier;
 
 public class ModItem {
     public static final Item TELEPORTATION_STAFF = new TeleportationStaff(new FabricItemSettings().maxCount(1));
-    public static final Item PEACE_MANUAL = new PeaceManual(new FabricItemSettings());
+    public static final Item PEACE_MANUAL = new PeaceManual(new FabricItemSettings().maxCount(1));
 
 
     public static void register() {
