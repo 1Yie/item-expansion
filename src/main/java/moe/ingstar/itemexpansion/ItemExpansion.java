@@ -1,7 +1,9 @@
 package moe.ingstar.itemexpansion;
 
+import moe.ingstar.itemexpansion.registry.ModEffect;
+import moe.ingstar.itemexpansion.registry.ModEnchantment;
 import moe.ingstar.itemexpansion.registry.ModGroup;
-import moe.ingstar.itemexpansion.registry.ModItems;
+import moe.ingstar.itemexpansion.registry.ModItem;
 import moe.ingstar.itemexpansion.util.TeleportationStaffHandler;
 import net.fabricmc.api.ModInitializer;
 
@@ -14,8 +16,10 @@ public class ItemExpansion implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		ModItems.register();
+		ModItem.register();
 		ModGroup.register();
+		ModEffect.register();
+		ModEnchantment.register();
 
 		TeleportationStaffHandler.init();
 	}

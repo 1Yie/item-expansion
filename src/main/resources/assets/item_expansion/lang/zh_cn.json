@@ -1,10 +1,21 @@
 {
   "item.item_expansion.teleportation_staff": "传送法杖",
+  "item.item_expansion.peace_manual": "和平手册",
+
+  "enchantment.item_expansion.peace_treaty": "和平条约",
+  "enchantment.item_expansion.three_rules": "约法三章",
+
+  "item.item_expansion.peace_manual.tooltip_1": "右键使用消除附近生物的敌对状态",
+  "item.item_expansion.peace_manual.state": "目前和平范围：%s 米",
 
   "item.item_expansion.teleportation_staff.tooltip_1": "右键记录坐标，对准生物右键传送到该坐标",
   "item.item_expansion.teleportation_staff.key": "已写入记录点，可以在物品描述内查看记录信息",
+  "item.item_expansion.teleportation_staff.offhand.key": "无法处于副手使用",
   "item.item_expansion.teleportation_staff.nbt.key": "无记录点",
+  "item.item_expansion.teleportation_staff.key.success": "传送成功！传送位置：X:%s Y:%s Z:%s",
   "item.item_expansion.teleportation_staff.key.fail": "记录点维度不一致",
 
-  "itemGroup.item_expansion.tool_group": "物品扩展 - 工具"
+  "itemGroup.item_expansion.tool_group": "物品扩展 - 工具",
+
+  "effect.item_expansion.eliminate_hatred": "向往和平"
 }

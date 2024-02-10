@@ -30,8 +30,9 @@ public class TeleportationStaff extends Item {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack mainHandItem = user.getMainHandStack();
         ItemStack offHanItem = user.getOffHandStack();
+        ItemStack itemStack = user.getStackInHand(hand);
 
-        if (!NBTHelper.hasNbt(mainHandItem, "used")) {
+        if (!NBTHelper.hasNbt(mainHandItem, "used") && hand == Hand.MAIN_HAND) {
             nbtCompound.putString("world", user.getWorld().getRegistryKey().getValue().toString());
             nbtCompound.putString("x", String.format("%.2f", user.getX()));
             nbtCompound.putString("y", String.format("%.2f", user.getY()));
@@ -39,22 +40,23 @@ public class TeleportationStaff extends Item {
             nbtCompound.putString("used", "1");
 
             user.getMainHandStack().setNbt(nbtCompound);
-        } else {
+        } else if (hand == Hand.MAIN_HAND) {
             nbtCompound.putString("world", user.getWorld().getRegistryKey().getValue().toString());
             nbtCompound.putString("x", String.format("%.2f", user.getX()));
             nbtCompound.putString("y", String.format("%.2f", user.getY()));
             nbtCompound.putString("z", String.format("%.2f", user.getZ()));
 
             user.getMainHandStack().setNbt(nbtCompound);
+            user.getItemCooldownManager().set(itemStack.getItem(), 10);
         }
 
-        user.getItemCooldownManager().set(user.getMainHandStack().getItem(), 10);
-
-        if (hand == Hand.MAIN_HAND) {
+        if (hand == Hand.OFF_HAND) {
+            user.sendMessage(Text.translatable("item.item_expansion.teleportation_staff.offhand.key").formatted(Formatting.DARK_RED), true);
+            return TypedActionResult.fail(offHanItem);
+        } else {
             user.sendMessage(Text.translatable("item.item_expansion.teleportation_staff.key").formatted(Formatting.WHITE), true);
             return TypedActionResult.success(mainHandItem);
         }
-        return TypedActionResult.fail(offHanItem);
     }
 
     @Override
@@ -85,5 +87,6 @@ public class TeleportationStaff extends Item {
         }
 
         tooltip.add(Text.translatable("item.item_expansion.teleportation_staff.tooltip_1").formatted(Formatting.DARK_GRAY));
+
     }
 }
